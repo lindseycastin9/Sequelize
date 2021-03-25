@@ -24,7 +24,7 @@ async function populateRestaurants() {
 
 }
 
-async function getData() {
+async function getMeals() {
     console.log('data request');
     const diningRequest = await fetch('/api/meals');
     const diningData = await diningRequest.json();
@@ -36,13 +36,23 @@ async function setBasicData() {
 }
 
 async function getBasicData () {
-    const cat = localStorage.getItem('mycat');
+    return localStorage.getItem('mycat');
+}
+
+async function setComplexData(data) {
+    localStorage.setItem('data', JSON.stringify(data));
 }
 
 async function windowActions () {
     console.log('loaded window');
-    const data = await getData();
-    console.table(data)
+    const meals = await getMeals();
+    console.table(meals);
+    setComplexData(meals);
+    const storedMeals = localStorage.getItem('data');
+    const storedMealsData = JSON.parse(storedMeals);
+    console.log(storedMeals);
+    console.log(storedMealsData);
+    
 }
 
 window.onload = windowActions; 
