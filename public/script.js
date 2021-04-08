@@ -1,21 +1,17 @@
-// Global Variables
+
 const arrTest = [];
 
-// Add the dining hall info to the bottom table
 async function getHallData() {
-  const endpoint = '/api/dining/'; // Where we fetch from
+  const endpoint = '/api/dining/'; 
   const request = await fetch(endpoint);
   const result = await request.json();
 
-  // Create an array then push data from the json to it
   const arr = [];
   arr.push(result.data);
 
-  const finalArr = arr[0]; // Initialize final array
-  // console.table(finalArr);
-  const target = document.querySelector('#finalTable');
+  const finalArr = arr[0]; 
+  const target = document.querySelector('#FinalTable');
   
-  // Loop through the array; Define variables and append data from each row to the table
   finalArr.forEach((index) => {
     const id = index.hall_id;
     const name = index.hall_name;
@@ -24,13 +20,12 @@ async function getHallData() {
     const appendObj = document.createElement('tr');
     appendObj.innerHTML = `<td>${id}</td> <td>${name}</td> <td>${location}</td>`;
     target.append(appendObj);
-    // console.log('ID: ' + id + ', Name: ' + name + ', Location: ' + location);
+    
   }); 
 }
 
-// Create the graph at top of page + fill it with data
 async function createGraph() {
-  const testEnd = '/api/customdata/'; // Where we fetch from
+  const testEnd = '/api/customdata/'; 
   const testQuest = await fetch(testEnd);
   const testResult = await testQuest.json();
 
@@ -44,11 +39,10 @@ async function createGraph() {
   let i;
   for (i = 0; i < 10; i++) {
     rVariable = Math.floor(Math.random() * rLength);
-    //console.log(arrTest[0][rVariable]);
     randomArr.push(arrTest[0][rVariable]);
   }
   
-  // Getters that will be used in the graph
+  
   function giveName(i) {
     return String(randomArr[i][0].meal_name);
   }
@@ -77,14 +71,13 @@ async function createGraph() {
     return randomArr[i][1].fat;
   }
 
-  // Create the chart and fill it with data
   const chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
     title:{
-      text: "Random UMD Dining Hall Meal Statistics"
+      text: "Maryland Dining Hall Meal Statistics"
       },
     axisX: {
-      title: "Meals"
+      title: "Food"
     },
     axisY: {
       title: "Macro Amount"
@@ -217,5 +210,4 @@ async function windowActions() {
   createGraph();
 }
   
-// Do the function on page load by default
 window.onload = windowActions; 
